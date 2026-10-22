@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Map of stops – Thorfinn{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/static/css/public.css" />
+{% endblock %}
+
+{% block body %}
+  <main class="page">
+    <nav class="topnav">
+      <span class="brand small">Thorfinn</span>
+      <div class="topnav-links">
+        <a class="navlink" href="/search">Search</a>
+        <a class="navlink active" href="/map">Map</a>
+      </div>
+    </nav>
+
+    <section class="card map-card full">
+      <div id="map"
+           data-center-lat="{{ center_lat }}"
+           data-center-lng="{{ center_lng }}"
+           data-csrf="{{ csrf_token }}">
+      </div>
+      <div id="legend" class="legend" hidden>
+        <span class="legend-item"><span class="swatch swatch-out"></span>leaving here</span>
+        <span class="legend-item"><span class="swatch swatch-in"></span>arriving here</span>
+      </div>
+    </section>
+
+    <p id="map-error" class="form-err" hidden></p>
+
+    <p class="map-hint">
+      Tap a blue dot to see its routes.&nbsp;&nbsp;Tap empty ground to
+      suggest a new stop.
+    </p>
+
+    <section id="stop-card" class="card stop-card" hidden></section>
+  </main>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/static/js/thorfinn.js"></script>
+  <script src="/static/js/public_map.js"></script>
+{% endblock %}

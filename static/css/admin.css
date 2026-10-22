@@ -1,0 +1,261 @@
+/* ============================================================
+   Admin map page
+   ============================================================ */
+
+html, body { height: 100%; }
+
+.topbar {
+  background: var(--ink);
+  color: #fff;
+  padding: .5rem .75rem;
+}
+
+.topbar .brand { color: #fff; }
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.topbar-menu { display: flex; align-items: center; gap: .6rem; }
+.topbar-menu .muted { color: #bbb; }
+.inline-form { display: inline; }
+
+/* Friendly overlay while the database is empty. */
+.empty-state {
+  position: absolute;
+  z-index: 1000;
+  max-width: 24rem;
+  top: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--accent);
+  border-radius: 8px;
+  padding: .9rem 1.1rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .25);
+}
+
+.empty-state h2 { margin: 0 0 .35rem; font-size: 1.1rem; }
+.empty-state p  { margin: 0; font-size: .92rem; }
+
+.hintbar {
+  background: var(--ink);
+  color: #ddd;
+  padding: .5rem .75rem;
+}
+
+.hintbar p { margin: 0; font-size: .85rem; max-width: 1100px; }
+
+/* ---------- toolbar ---------- */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  padding: .45rem .75rem;
+  background: #fff;
+  border-bottom: 2px solid var(--ink);
+}
+
+.toolbar-buttons { display: flex; gap: .5rem; }
+
+.btn-danger { background: #a11; }
+.btn-danger:hover { background: #7a0d0d; }
+
+.btn-verify {
+  background: var(--ok-ink);
+  margin-left: auto; /* sits on the right on wide screens, wraps below on narrow */
+}
+.btn-verify:hover { background: #143a0b; }
+
+.toolbar .btn.active {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+  background: var(--accent-dark);
+}
+
+.mode-hint {
+  font-size: .9rem;
+  font-weight: 600;
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+  padding: .25rem .6rem;
+  border-radius: 6px;
+}
+
+/* The map fills the space between the header and the toolbar.
+   Viewport height minus header + toolbar (est. ~6.5rem in total). */
+#map {
+  width: 100%;
+  height: calc(100vh - 6.5rem);
+  height: calc(100dvh - 6.5rem); /* dvh avoids mobile browser-chrome jump */
+  min-height: 400px;
+  background: #e8e4da; /* boards colour while tiles load */
+  position: relative;
+}
+
+/* ---------- stop markers (divIcons) ---------- */
+
+.stop-wrap { background: none; border: none; }
+.stop-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .5);
+  box-sizing: border-box;
+}
+.stop-dot.selected {
+  background: #f48c06;
+  box-shadow: 0 0 0 5px rgba(244, 140, 6, .35);
+}
+
+/* ---------- link arrows ---------- */
+
+.link-arrow {
+  width: 0;
+  height: 0;
+  border-left: 11px solid #c1121f;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .4));
+}
+
+/* ---------- popups ---------- */
+
+.pop { min-width: 14rem; max-width: 17rem; }
+.pop-actions { display: flex; gap: .5rem; margin-top: .7rem; }
+.link-meta { display: flex; align-items: center; gap: .6rem; margin: .3rem 0; }
+
+.form-row { display: flex; gap: .6rem; }
+.form-row > div { flex: 1; }
+
+.chk { transform: scale(1.3); margin-right: .45rem; vertical-align: middle; }
+.chk-lab { display: flex; align-items: center; }
+
+.rev-fields { border-top: 1px dashed var(--line); margin-top: .5rem; padding-top: .25rem; }
+
+/* ---------- toast ---------- */
+
+.toast {
+  position: fixed;
+  z-index: 4000;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 92vw;
+  background: var(--ok-bg);
+  color: var(--ok-ink);
+  border: 1px solid var(--ok-ink);
+  border-radius: 8px;
+  padding: .7rem 1rem;
+  font-size: .95rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .3);
+}
+
+.toast-error { background: var(--err-bg); color: var(--err-ink); border-color: var(--err-ink); }
+
+/* ---------- suggestions review page ---------- */
+
+.topbar-link {
+  color: #cde4f8;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .85rem;
+}
+.topbar-link:hover { color: #fff; text-decoration: underline; }
+
+.suggestions-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1rem .9rem 2.5rem;
+}
+
+.suggestions-wrap h1 { font-size: 1.35rem; margin: 0 0 .2rem; }
+
+.sugg-list {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+  margin-top: 1rem;
+}
+
+.sugg-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--accent);
+  border-radius: 10px;
+  padding: .9rem 1rem;
+}
+
+.sugg-card.alerted { border-left-color: #a11; }
+
+.sugg-name { font-size: 1.05rem; }
+.sugg-meta { margin: .4rem 0 .6rem; }
+
+.sugg-actions {
+  border-top: 1px dashed var(--line);
+  padding-top: .6rem;
+  margin-top: .4rem;
+}
+
+.empty-note {
+  margin-top: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+  color: #555;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+}
+
+.badge.st-pending { background: var(--accent); }
+.badge.st-alerted { background: #a11; }
+.badge.st-approved { background: var(--ok-ink); }
+.badge.st-rejected { background: #777; }
+
+.st-alerted-inline {
+  display: inline-block;
+  background: #a11;
+  color: #fff;
+  border-radius: 999px;
+  padding: 0 .45rem;
+  font-size: .78rem;
+  text-transform: uppercase;
+}
+
+/* ---------- settings page ---------- */
+
+.settings-alert {
+  max-width: 760px;
+  margin: 1rem auto 0;
+}
+
+.settings-form {
+  max-width: 760px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem 1.1rem 1.4rem;
+  margin-top: 1rem;
+}
+
+.settings-form .btn { margin-top: 1.1rem; }
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 560px) {
+  .topbar-inner { flex-wrap: wrap; gap: .4rem; }
+  .topbar-menu { flex-wrap: wrap; gap: .5rem; }
+  .toolbar { gap: .4rem .7rem; }
+  .toolbar .btn-verify { margin-left: 0; }
+  .mode-hint { font-size: .82rem; }
+  .suggestions-wrap { padding-left: .8rem; padding-right: .8rem; }
+}

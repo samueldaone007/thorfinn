@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Suggestions – Thorfinn Admin{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="/static/css/admin.css" />
+{% endblock %}
+
+{% block body %}
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand small">Thorfinn · Admin</span>
+      <div class="topbar-menu">
+        <a class="topbar-link" href="/admin/map">Map</a>
+        <a class="topbar-link" href="/admin/suggestions">
+          Suggestions{% if pending_count %} ({{ pending_count }}){% endif %}
+        </a>
+        <a class="topbar-link" href="/admin/settings">Settings</a>
+        <span class="muted small">{{ admin_username }}</span>
+        <form method="post" action="/admin/logout" class="inline-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="btn btn-link small">Log out</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main class="suggestions-wrap">
+    <h1>Public suggestions</h1>
+    <p class="muted small">
+      People tap the public map to ask for new stops. Approve to add the stop
+      (you can tweak its name first), or reject it. An <span class="st-alerted-inline">alerted</span>
+      group means several different devices asked for the same spot.
+    </p>
+
+    <div id="list" class="sugg-list"></div>
+
+    <div id="empty" class="empty-note" hidden>
+      Nothing here yet – when a visitor suggests a stop on the public map,
+      it will show up in this list.
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="/static/js/thorfinn.js"></script>
+  <script src="/static/js/admin_suggestions.js"></script>
+{% endblock %}

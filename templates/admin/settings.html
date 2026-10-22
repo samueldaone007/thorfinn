@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Settings – Thorfinn Admin{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="/static/css/admin.css" />
+{% endblock %}
+
+{% block body %}
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand small">Thorfinn · Admin</span>
+      <div class="topbar-menu">
+        <a class="topbar-link" href="/admin/map">Map</a>
+        <a class="topbar-link" href="/admin/suggestions">Suggestions</a>
+        <a class="topbar-link" href="/admin/settings">Settings</a>
+        <span class="muted small">{{ admin_username }}</span>
+        <form method="post" action="/admin/logout" class="inline-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="btn btn-link small">Log out</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  {% if saved %}
+    <div class="alert alert-ok settings-alert">Settings saved.</div>
+  {% endif %}
+  {% if error %}
+    <div class="alert alert-error settings-alert">{{ error }}</div>
+  {% endif %}
+
+  <main class="suggestions-wrap">
+    <h1>Settings</h1>
+    <p class="muted small">
+      How public suggestions are grouped and when information is considered
+      outdated.
+    </p>
+
+    <form method="post" action="/admin/settings" class="card settings-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+      <label class="lab" for="suggestion_threshold">Devices needed to alert</label>
+      <input id="suggestion_threshold" name="suggestion_threshold" type="number"
+             class="tf" min="1" max="1000" value="{{ suggestion_threshold }}" required>
+      <p class="muted small">Distinct devices must ask for the same stop before the admin is alerted.</p>
+
+      <label class="lab" for="grouping_radius_meters">Grouping radius (metres)</label>
+      <input id="grouping_radius_meters" name="grouping_radius_meters" type="number"
+             class="tf" min="10" max="5000" value="{{ grouping_radius_meters }}" required>
+      <p class="muted small">How close two suggestions must be to count as the same stop.</p>
+
+      <label class="lab" for="freshness_days">Freshness window (days)</label>
+      <input id="freshness_days" name="freshness_days" type="number"
+             class="tf" min="1" max="3650" value="{{ freshness_days }}" required>
+      <p class="muted small">
+        Stops and links not re-confirmed within this many days are shown on the
+        public map as "may be outdated".
+      </p>
+
+      <button class="btn btn-block" type="submit">Save settings</button>
+    </form>
+  </main>
+{% endblock %}

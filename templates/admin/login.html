@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Admin login – Thorfinn{% endblock %}
+
+{% block body %}
+  <main class="auth-page">
+    <div class="auth-card">
+      <h1 class="brand">Thorfinn</h1>
+      <p class="tagline">Admin area</p>
+
+      {% if error %}
+        <div class="alert alert-error" role="alert">{{ error }}</div>
+      {% endif %}
+
+      <form method="post" action="/admin/login">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+        <label for="username">Username</label>
+        <input
+          id="username" name="username" type="text" required maxlength="80"
+          value="{{ username }}" autofocus autocomplete="username"
+        >
+
+        <label for="password">Password</label>
+        <input
+          id="password" name="password" type="password" required
+          autocomplete="current-password"
+        >
+
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+      </form>
+
+      <p class="muted" style="margin-top:1rem;font-size:.85rem">
+        A password reset is not built in yet. If you forget it, you (or the
+        database owner) can delete the password_hash row in the <code>admins</code>
+        table and visit the setup page again while no admin exists.
+      </p>
+    </div>
+  </main>
+{% endblock %}

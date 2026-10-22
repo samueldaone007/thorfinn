@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Admin map – Thorfinn{% endblock %}
+
+{% block head %}
+  {# Leaflet map library, loaded from the free Cloudflare CDN. #}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/static/css/admin.css" />
+{% endblock %}
+
+{% block body %}
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand small">Thorfinn · Admin</span>
+      <div class="topbar-menu">
+        <a class="topbar-link" href="/admin/suggestions">
+          Suggestions{% if pending_count %} ({{ pending_count }}){% endif %}
+        </a>
+        <a class="topbar-link" href="/admin/settings">Settings</a>
+        <span class="muted small">{{ admin_username }}</span>
+        <form method="post" action="/admin/logout" class="inline-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="btn btn-link small">Log out</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-buttons" role="group" aria-label="Editing tools">
+      <button id="btn-stop" class="btn btn-sm" type="button">+ Add stop</button>
+      <button id="btn-link" class="btn btn-sm" type="button">+ Add link</button>
+    </div>
+    <span id="mode-hint" class="mode-hint">Click the map to drop a new stop.</span>
+    <button id="verify-map" class="btn btn-sm btn-verify" type="button"
+            title="Re-confirm every stop and link as correct today">
+      Mark map verified
+    </button>
+  </div>
+
+  {# data-csrf is read by the JavaScript and sent as the X-CSRF-Token header
+     on every API call, so the browser can't be tricked into a forged request. #}
+  <div id="map"
+       data-center-lat="{{ center_lat }}"
+       data-center-lng="{{ center_lng }}"
+       data-csrf="{{ csrf_token }}">
+  </div>
+
+  {# Friendly empty state, shown until the admin adds the first stop. #}
+  <div id="empty-state" class="empty-state" hidden>
+    <h2>No stops added yet</h2>
+    <p>
+      Click anywhere on the map to drop the first stop, give it a name,
+      then use "+ Add link" to connect two stops with a fare range.
+    </p>
+  </div>
+
+  {# Small pop-up for errors and confirmations. #}
+  <div id="toast" class="toast" role="status" hidden></div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/static/js/thorfinn.js"></script>
+  <script src="/static/js/admin_map.js"></script>
+{% endblock %}

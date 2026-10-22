@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Set up Thorfinn{% endblock %}
+
+{% block body %}
+  <main class="auth-page">
+    <div class="auth-card">
+      <h1 class="brand">Thorfinn</h1>
+      <p class="tagline">Abuja journey planner</p>
+
+      <h2>Create your admin account</h2>
+      <p class="muted">
+        This is the very first run, so this screen creates the only admin
+        account. Choose a username and a strong password.
+      </p>
+
+      {% if error %}
+        <div class="alert alert-error" role="alert">{{ error }}</div>
+      {% endif %}
+
+      <form method="post" action="/admin/setup" autocomplete="off">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+        <label for="username">Username</label>
+        <input
+          id="username" name="username" type="text" required minlength="3"
+          maxlength="80" value="{{ username }}" autofocus autocomplete="username"
+        >
+
+        <label for="password">Password</label>
+        <input
+          id="password" name="password" type="password" required minlength="8"
+          autocomplete="new-password"
+        >
+
+        <label for="password_confirm">Repeat password</label>
+        <input
+          id="password_confirm" name="password_confirm" type="password"
+          required minlength="8" autocomplete="new-password"
+        >
+
+        <button type="submit" class="btn btn-primary btn-block">Create account</button>
+      </form>
+    </div>
+  </main>
+{% endblock %}

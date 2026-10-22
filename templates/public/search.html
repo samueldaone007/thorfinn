@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Journey planner – Thorfinn{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/static/css/public.css" />
+{% endblock %}
+
+{% block body %}
+  <main class="page">
+    <nav class="topnav">
+      <span class="brand small">Thorfinn</span>
+      <div class="topnav-links">
+        <a class="navlink active" href="/search">Search</a>
+        <a class="navlink" href="/map">Map</a>
+      </div>
+    </nav>
+
+    <p class="page-tagline">Abuja journey planner · step by step, with honest fares</p>
+
+    <section class="card search-card">
+      <form id="search-form" novalidate autocomplete="off">
+        <label class="lab" for="from">From</label>
+        <div class="row">
+          <input id="from" class="tf" list="stop-list" placeholder="Type a stop (e.g. Karu)">
+          <button id="use-my-loc" class="btn btn-sm" type="button" title="Use my location">
+            My&nbsp;location
+          </button>
+        </div>
+        <p id="loc-note" class="muted small" hidden></p>
+
+        <label class="lab" for="to">To</label>
+        <div class="row">
+          <input id="to" class="tf" list="stop-list" placeholder="Type a stop (e.g. Wuse)">
+          <button id="swap" class="btn btn-sm swap" type="button" title="Swap from and to">⇅</button>
+        </div>
+
+        <datalist id="stop-list"></datalist>
+
+        <p id="no-stops-note" class="muted small" hidden>
+          No stops are on the map yet - ask an admin to add some.
+        </p>
+
+        <button id="find" class="btn btn-primary btn-block" type="submit">Find route</button>
+      </form>
+    </section>
+
+    <section id="no-route" class="card warn-card" hidden></section>
+
+    <section id="results" class="card" hidden>
+      <div id="routes-tabs" class="tabs" hidden>
+        <button id="tab-cheap" class="tab" type="button">Cheapest</button>
+        <button id="tab-fewest" class="tab" type="button">Fewest changes</button>
+      </div>
+      <div id="legs"></div>
+      <div id="totals" class="totals"></div>
+    </section>
+
+    <section class="card map-card">
+      <div id="search-map"
+           data-center-lat="{{ center_lat }}"
+           data-center-lng="{{ center_lng }}"></div>
+    </section>
+  </main>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/static/js/thorfinn.js"></script>
+  <script src="/static/js/public_search.js"></script>
+{% endblock %}

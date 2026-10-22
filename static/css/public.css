@@ -1,0 +1,321 @@
+/* ============================================================
+   Public pages: mobile first, high contrast, light and quick.
+   The main search page must stay well under 500 KB.
+   Shared primitives (.lab, .tf, .badge, .card-head, .form-err,
+   .pop-title, .btn-sm) live in style.css.
+   ============================================================ */
+
+/* ---------- layout ---------- */
+
+.page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1rem .9rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.page-tagline {
+  text-align: center;
+  color: #555;
+  font-size: .95rem;
+  margin: .2rem 0 .2rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+.warn-card {
+  border-left: 6px solid var(--warn-ink);
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+  font-size: .95rem;
+}
+
+/* ---------- search form ---------- */
+
+.row { display: flex; gap: .5rem; }
+.row .tf { width: auto; flex: 1; }
+
+.swap {
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  font-size: 1rem;
+}
+.swap:hover { background: #eee; }
+
+#loc-note { margin: .4rem 0 0; }
+
+.loc-note-warn {
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+  border-radius: 6px;
+  padding: .45rem .6rem;
+}
+
+.btn[disabled] { opacity: .6; cursor: default; }
+
+/* ---------- results ---------- */
+
+.tabs {
+  display: flex;
+  gap: .4rem;
+  margin-bottom: .8rem;
+}
+
+.tab {
+  flex: 1;
+  padding: .55rem .5rem;
+  font-size: .95rem;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.tabs[hidden] { display: none; }
+
+.leg { margin-bottom: .7rem; }
+
+.leg-head {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  font-weight: 700;
+  margin-bottom: .35rem;
+}
+
+.leg-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: .85rem;
+  flex: 0 0 auto;
+}
+
+.leg-opt {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .3rem 0 .3rem 2.15rem;
+  font-size: .95rem;
+}
+
+.leg-opt.picked { font-weight: 700; }
+
+.change {
+  padding-left: 0;
+  display: flex;
+  justify-content: center;
+  margin: .15rem 0;
+}
+
+.badge-soft {
+  background: #e0e0e0;
+  color: var(--ink);
+  font-size: .8rem;
+  padding-left: .7rem;
+  padding-right: .7rem;
+}
+
+.totals {
+  margin-top: .8rem;
+  padding-top: .75rem;
+  border-top: 2px solid var(--ink);
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+/* ---------- map ---------- */
+
+.map-card { padding: 0; overflow: hidden; }
+#search-map {
+  width: 100%;
+  height: 45vh;
+  height: 45dvh;
+  min-height: 320px;
+  background: #e8e4da;
+}
+
+/* ---------- public map page (/map) ---------- */
+
+.topnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: .3rem 0 .4rem;
+}
+
+.topnav-links { display: flex; gap: .4rem; }
+
+.navlink {
+  display: inline-block;
+  padding: .4rem .7rem;
+  border-radius: 6px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: .9rem;
+  text-decoration: none;
+}
+.navlink:hover { background: #e8e8e5; }
+.navlink.active { background: var(--accent); color: #fff; }
+
+.map-card.full { position: relative; }
+#map {
+  width: 100%;
+  height: 60vh;
+  height: 60dvh;
+  min-height: 400px;
+  background: #e8e4da;
+}
+
+.legend {
+  position: absolute;
+  left: .6rem;
+  bottom: .6rem;
+  z-index: 700;
+  display: flex;
+  gap: 1rem;
+  background: rgba(255, 255, 255, .95);
+  border-radius: 8px;
+  padding: .4rem .7rem;
+  font-size: .8rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+}
+
+.legend-item { display: inline-flex; align-items: center; gap: .35rem; }
+
+.legend[hidden] { display: none; }
+
+.swatch {
+  display: inline-block;
+  width: 20px;
+  height: 5px;
+  border-radius: 2px;
+}
+.swatch-out { background: #c1121f; }
+.swatch-in { background: #0b5394; }
+
+.stop-card {
+  z-index: 800;
+  padding: .9rem 1rem;
+}
+
+.close-x {
+  border: none;
+  background: none;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: #555;
+  cursor: pointer;
+  padding: .1rem .35rem;
+}
+.close-x:hover { color: var(--ink); }
+
+.goes-title {
+  font-weight: 600;
+  font-size: .85rem;
+  margin: .7rem 0 .3rem;
+}
+
+.goes { display: flex; flex-direction: column; gap: .28rem; }
+
+.goes-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .95rem;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  flex: 0 0 auto;
+}
+.arrow-out {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 9px solid #c1121f;
+}
+.arrow-in {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 9px solid #0b5394;
+}
+
+.btn-block-sm { width: 100%; margin-top: .9rem; }
+
+/* Direction arrowheads shown at the middle of highlighted routes. */
+.link-arrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 12px solid #c1121f;
+  transform-origin: 50% 40%;
+}
+.link-arrow.in { border-top-color: #0b5394; }
+
+/* ---------- suggest a stop (Step 5) ---------- */
+
+.map-hint {
+  margin: 0;
+  text-align: center;
+  color: #555;
+  font-size: .85rem;
+}
+
+.suggest-ok {
+  background: var(--ok-bg);
+  color: var(--ok-ink);
+  border-radius: 6px;
+  padding: .6rem .8rem;
+  margin-top: .6rem;
+  font-size: .95rem;
+}
+
+/* Freshness badges (Step 7) */
+.conf-chip {
+  display: inline-flex;
+  align-items: center;
+  margin-top: .45rem;
+  border-radius: 999px;
+  padding: .14rem .65rem;
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+.conf-chip.ok { background: var(--ok-bg); color: var(--ok-ink); }
+.conf-chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 560px) {
+  .page { padding-left: .7rem; padding-right: .7rem; }
+  .legend {
+    flex-wrap: wrap;
+    gap: .3rem .8rem;
+    max-width: calc(100% - 1.2rem);
+  }
+}
